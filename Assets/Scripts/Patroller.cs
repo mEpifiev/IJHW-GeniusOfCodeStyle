@@ -29,8 +29,6 @@ public class Patroller : MonoBehaviour
 
     private void MoveToNextWaypoint()
     {
-        _currentWaypointIndex++;
-        
         if(transform.position == _waypoints[_currentWaypointIndex].position)
             _currentWaypointIndex = (_currentWaypointIndex + 1) % _waypoints.Length;
 
