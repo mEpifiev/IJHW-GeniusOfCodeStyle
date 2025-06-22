@@ -31,8 +31,7 @@ public class Patroller : MonoBehaviour
     {
         _currentWaypointIndex++;
 
-        if (_currentWaypointIndex == _waypoints.Length)
-            _currentWaypointIndex = 0;
+        _currentWaypointIndex = (_currentWaypointIndex + 1) % _waypoints.Length;
 
         Vector3 nextWaypoint = _waypoints[_currentWaypointIndex].transform.position;
 
