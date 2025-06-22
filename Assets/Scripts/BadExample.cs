@@ -1,43 +1,41 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class GoPlaces : MonoBehaviour
+public class WaypointMover : MonoBehaviour
 {
-    public float _float;
+    [SerializeField] private Transform _waypointsContainer;
+    [SerializeField] private Transform[] _waypoints;
 
+    [SerializeField] private float _speed;
 
+    private int _currentWaypointIndex;
 
-    public Transform AllPlacespoint;
-    Transform[] arrayPlaces;
-    private int NumberOfPlaceInArrayPlaces;
-    void Start() {
-        arrayPlaces = new Transform[AllPlacespoint.childCount];
-
-        for (int abcd = 0; abcd < AllPlacespoint.childCount; abcd++)
-            arrayPlaces[abcd] = AllPlacespoint.GetChild(abcd).GetComponent<Transform>();
-        }
-    // Update is called once per frame
-    public void Update()
+    private void Awake()
     {
-        var _pointByNumberInArray= arrayPlaces[NumberOfPlaceInArrayPlaces];
-        transform.position   =  Vector3.MoveTowards(transform.position , _pointByNumberInArray.position, _float * Time.deltaTime);
+        _waypoints = new Transform[_waypointsContainer.childCount];
 
-
-          if (transform.position == _pointByNumberInArray.position)  NextPlaceTakerLogic();
-    }
-    public Vector3 NextPlaceTakerLogic(){
-        NumberOfPlaceInArrayPlaces++;
-
-            if (NumberOfPlaceInArrayPlaces == arrayPlaces.Length)
-                NumberOfPlaceInArrayPlaces  = 0;
-
-        var thisPointVector = arrayPlaces[NumberOfPlaceInArrayPlaces].transform.position;
-        transform.forward = thisPointVector - transform.position;
-        return thisPointVector;
-
-        
+        for (int i = 0; i < _waypointsContainer.childCount; i++)
+            _waypoints[i] = _waypointsContainer.GetChild(i).GetComponent<Transform>();
     }
 
+    private void Update()
+    {
+        Transform point = _waypoints[_currentWaypointIndex];
 
+        transform.position = Vector3.MoveTowards(transform.position, point.position, _speed * Time.deltaTime);
+
+        if (transform.position == point.position)
+            MoveToNextWaypoint();
+    }
+
+    private void MoveToNextWaypoint()
+    {
+        _currentWaypointIndex++;
+
+        if (_currentWaypointIndex == _waypoints.Length)
+            _currentWaypointIndex = 0;
+
+        Vector3 nextWaypoint = _waypoints[_currentWaypointIndex].transform.position;
+
+        transform.forward = nextWaypoint - transform.position;
+    }
 }
