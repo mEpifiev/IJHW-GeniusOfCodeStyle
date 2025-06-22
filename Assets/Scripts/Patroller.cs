@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class WaypointMover : MonoBehaviour
+public class Patroller : MonoBehaviour
 {
     [SerializeField] private Transform _waypointsContainer;
     [SerializeField] private Transform[] _waypoints;

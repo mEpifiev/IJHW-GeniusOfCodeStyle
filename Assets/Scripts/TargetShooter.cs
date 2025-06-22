@@ -7,7 +7,8 @@ public class TargetShooter : MonoBehaviour
     [SerializeField] private Transform _target;
     [SerializeField] float _cooldown;
 
-    private void Start() {
+    private void Start()
+    {
 
            StartCoroutine(Shoot());
     }
