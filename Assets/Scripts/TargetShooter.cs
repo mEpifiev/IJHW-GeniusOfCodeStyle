@@ -16,9 +16,8 @@ public class TargetShooter : MonoBehaviour
     private IEnumerator Shoot()
     {
         WaitForSeconds wait = new WaitForSeconds(_cooldown);
-        bool isActive = enabled;
 
-        while (isActive)
+        while (enabled)
         {
             Vector3 direction = (_target.position - transform.position).normalized;
             Instantiate(_prefab, transform.position + direction, Quaternion.identity);
